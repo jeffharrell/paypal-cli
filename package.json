@@ -1,0 +1,30 @@
+{
+  "name": "paypal-cli",
+  "version": "1.0.0",
+  "description": "CLI for PayPal REST APIs.",
+  "main": "index.js",
+  "bin": {
+    "paypal": "./cli.js"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "paypal",
+    "rest",
+    "api",
+    "cli"
+  ],
+  "author": "Jeff Harrell <jeff@juxtadesign.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^2.2.1"
+  },
+  "dependencies": {
+    "minimist": "^1.1.1",
+    "prompt": "^0.2.14",
+    "request": "^2.54.0",
+    "treeify": "^1.0.1",
+    "yargs": "^3.7.0"
+  }
+}
