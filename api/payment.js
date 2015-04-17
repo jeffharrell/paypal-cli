@@ -1,39 +1,27 @@
 'use strict';
 
 
-var request = require('request');
+var util = require('util');
+var Client = require('./Client');
 
 
 function Payment(config) {
-    var that = this;
-
-    this.config = config;
-
-    ['get', 'post', 'delete', 'patch', 'put'].forEach(
-        function (verb) {
-            that[verb] = function (url, data, callback) {
-                that.api(verb, url, data, callback);
-            };
-        }
-    );
-
-    this.api = function (method, url, data, callback) {
-        request({
-            method: method,
-            url: this.config.url + url,
-            headers: {
-                'Authorization': 'Bearer ' + this.config.accessToken,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }, function (err, http, body) {
-            callback(err, body);
-        });
-    };
+	this.config = config;
+	Client.call(this);
 }
 
 
+util.inherits(Payment, Client);
+
+
 Payment.prototype.create = function create(data, callback) {
+	var errors = this.validate(data, ['total', 'return_url', 'cancel_url']);
+
+	if (errors.length) {
+		callback(new Error('Required value(s): ' + errors.join(', ')));
+		return;
+	}
+
     this.post('/v1/payments/payment', {
         intent: data.intent || 'sale',
         payer: {
@@ -56,23 +44,29 @@ Payment.prototype.create = function create(data, callback) {
 
 
 Payment.prototype.details = function details(data, callback) {
-    this.get('/v1/payments/payment/' + data['payment-id'], {}, callback);
+	var errors = this.validate(data, ['payment-id']);
+
+	if (errors.length) {
+		callback(new Error('Required value(s): ' + errors.join(', ')));
+		return;
+	}
+
+    this.get('/v1/payments/payment/' + data['payment-id'], null, callback);
 };
 
 
 Payment.prototype.execute = function execute(data, callback) {
+	var errors = this.validate(data, ['payment-id', 'payer-id']);
+
+	if (errors.length) {
+		callback(new Error('Required value(s): ' + errors.join(', ')));
+		return;
+	}
+
     this.post('/v1/payments/payment/' + data['payment-id'] + '/execute', {
         payer_id: data['payer-id']
     }, callback);
 };
 
 
-
-
-
-module.exports = function (config, options, callback) {
-    var payment = new Payment(config);
-    var action = options._.shift();
-
-    payment[action] && payment[action](options, callback);
-};
+module.exports = Payment;

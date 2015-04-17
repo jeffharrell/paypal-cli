@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var file = [process.env.USERPROFILE || process.env.HOME, '.paypal-cli'].join(path.sep);
 
+
 var defaults = {
 	accessToken: null,
 	format: 'text',
@@ -15,7 +16,7 @@ var defaults = {
 function read(callback) {
 	fs.readFile(file, function (err, result) {
 		var settings;
-		
+
 		try {
 			settings = JSON.parse(result.toString());
 		} catch (e) {
@@ -51,10 +52,5 @@ function merge(obj1, obj2) {
 }
 
 
-module.exports = function (options, callback) {
-	if (options) {
-		write(options, callback);
-	} else {
-		read(callback);
-	}
-};
+module.exports.get = read;
+module.exports.set = write;

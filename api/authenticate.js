@@ -1,65 +1,45 @@
 'use strict';
 
 
-var prompt = require('prompt');
-var request = require('request');
-var settings = require('./settings');
+var util = require('util');
+var Client = require('./Client');
 
 
-module.exports = function (config, options) {
-    prompt.start();
-    prompt.message = '';
-    prompt.delimiter = '';
-    prompt.override = options;
+function Auth(config) {
+	this.config = config;
+	Client.call(this);
+}
 
-    prompt.get([
-        {
-            name: 'clientId',
-            description: 'Client Id:',
-            required: true
-        },
-        {
-            name: 'secret',
-            description: 'Secret:',
-            required: true,
-            hidden: true
-        }
-    ], authenticateApi);
+
+util.inherits(Auth, Client);
+
+
+Auth.prototype.authType = function authType() {
+	return 'Basic ' + this.token;
 };
 
 
-function authenticateApi(err, options) {
-    var auth = new Buffer(options.clientId + ':' + options.secret, 'binary').toString('base64');
-
-    request({
-        method: 'post',
-        uri: 'https://api.sandbox.paypal.com/v1/oauth2/token',
-        headers: {
-            'Authorization': 'Basic ' + auth,
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-        },
-        body: 'grant_type=client_credentials'
-    }, function (err, response, body) {
-        var result = JSON.parse(body);
-        var accessToken = result && result.access_token;
-
-        if (err) {
-            console.error(err);
-        } else {
-            save(accessToken);
-        }
-    });
-}
+Auth.prototype.contentType = function contentType() {
+	return 'application/x-www-form-urlencoded; charset=utf-8';
+};
 
 
-function save(token) {
-    var data = {
-        accessToken: token
-    };
+Auth.prototype.body = function body(data) {
+	return data;
+};
 
-    settings(data, function (err, result) {
-        if (err) {
-            console.error(err);
-        }
-    });
-}
+
+Auth.prototype.login = function login(data, callback) {
+	var errors = this.validate(data, ['clientId']);
+
+	if (errors.length) {
+		callback(new Error('Required value(s): ' + errors.join(', ')));
+		return;
+	}
+
+    this.token = new Buffer(data.clientId + ':' + data.secret, 'binary').toString('base64');
+    this.post('/v1/oauth2/token', 'grant_type=client_credentials', callback);
+};
+
+
+module.exports = Auth;
