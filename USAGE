@@ -1,5 +1,4 @@
-paypal --help
 
-paypal payments create --total=1.00 --currency=USD --return-url=<url> --cancel-url=<url>
-paypal payments details --payment-id=<id>
-paypal payments execute --payment-id=<id> --payer-id=<user>
+paypal payment create  --total=1.00 --return-url={url} --cancel-url={url}
+paypal payment details --payment-id={id}
+paypal payment execute --payment-id={id} --payer-id={user}

@@ -3,7 +3,15 @@
 'use strict';
 
 
-var yargs = require('yargs');
+var fs = require('fs');
+
+var yargs = require('yargs')
+    .usage(fs.readFileSync('./USAGE').toString())
+    .help('h')
+    .alias('h', 'help')
+    .alias('v', 'version')
+    .version(require('./package').version);
+
 var argv = yargs.argv;
 var action = argv._[0];
 var config = require('./util/config')();
@@ -15,4 +23,8 @@ var commands = {
 };
 
 
-commands[action] && commands[action](config, yargs);
+if (commands[action]) {
+    commands[action](config, yargs);
+} else {
+    yargs.showHelp();
+}
