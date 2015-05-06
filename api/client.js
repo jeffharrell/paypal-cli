@@ -49,7 +49,7 @@ ApiClient.prototype.api = function api(method, path, data, callback) {
         }
 
         if (http.statusCode === 401) {
-            err = new Error(result.error_description);
+            err = new Error('Unauthorized');
         }
 
         callback(err, result);
