@@ -6,23 +6,38 @@ var Payment = require('paypal-api').payment;
 
 
 module.exports = function (config, yargs) {
-    var argv, payment, action;
-
-    yargs.demand('total');
-    yargs.demand('return_url');
-    yargs.demand('cancel_url');
-    yargs.default('intent', 'sale');
-    yargs.default('currency', 'USD');
-    yargs.default('payment_method', 'paypal');
+    var argv = yargs.argv;
+    var command = argv._[1];
+    var payment = new Payment(config);
 
 
-    argv = yargs.argv;
-    payment = new Payment(config);
-    action = argv._[1];
+    switch(command) {
+    case 'create':
+        yargs.demand('total');
+        yargs.demand('return_url');
+        yargs.demand('cancel_url');
+        yargs.default('intent', 'sale');
+        yargs.default('currency', 'USD');
+        yargs.default('payment_method', 'paypal');
 
-    if (payment[action]) {
-        payment[action](argv, callback);
-    } else {
+        payment.create(yargs.argv, callback);
+        break;
+
+    case 'details':
+        yargs.demand('payment_id');
+
+        payment.details(yargs.argv, callback);
+        break;
+
+    case 'execute':
+        yargs.demand('payment-id');
+        yargs.demand('payer-id');
+
+        payment.create(yargs.argv, callback);
+        break;
+
+    default:
         yargs.showHelp();
     }
+
 };

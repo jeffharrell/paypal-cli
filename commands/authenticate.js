@@ -6,11 +6,15 @@ var config = require('../util/config');
 var Auth = require('paypal-api').authenticate;
 
 
-module.exports = function (config, options) {
+module.exports = function (config, yargs) {
+	yargs.default('clientId', null);
+	yargs.default('secret', null);
+
+
     prompt.start();
     prompt.message = '';
     prompt.delimiter = '';
-    prompt.override = options;
+    prompt.override = yargs.argv;
 
     prompt.get([
         {

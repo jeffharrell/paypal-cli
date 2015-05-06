@@ -16,11 +16,11 @@ var argv = yargs.argv;
 var action = argv._[0];
 var config = require('./util/config')();
 
-
 var commands = {
     authenticate: require('./commands/authenticate'),
     payment: require('./commands/payment')
 };
+
 
 
 if (commands[action]) {

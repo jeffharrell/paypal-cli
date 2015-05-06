@@ -1,4 +1,6 @@
 
+paypal authenticate
+
 paypal payment create  --total=1.00 --return-url={url} --cancel-url={url}
 paypal payment details --payment-id={id}
 paypal payment execute --payment-id={id} --payer-id={user}
