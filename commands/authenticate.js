@@ -2,9 +2,8 @@
 
 
 var prompt = require('prompt');
-var request = require('request');
 var settings = require('../util/settings');
-var Auth = require('../api/authenticate');
+var Auth = require('paypal-api').authenticate;
 
 
 module.exports = function (config, options) {

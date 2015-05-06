@@ -1,7 +1,7 @@
 'use strict';
 
 
-var Payment = require('../api/payment');
+var Payment = require('paypal-api').payment;
 
 
 module.exports = function (config, options, callback) {
