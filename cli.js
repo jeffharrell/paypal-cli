@@ -6,7 +6,7 @@
 var yargs = require('yargs');
 var argv = yargs.argv;
 var action = argv._[0];
-var config = require('./util/settings')();
+var config = require('./util/config')();
 
 
 var commands = {

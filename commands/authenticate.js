@@ -2,7 +2,7 @@
 
 
 var prompt = require('prompt');
-var settings = require('../util/settings');
+var config = require('../util/config');
 var Auth = require('paypal-api').authenticate;
 
 
@@ -42,7 +42,7 @@ function save(err, result) {
         process.exit(1);
     }
 
-    settings({
+    config({
         accessToken: result.access_token
     });
 }
