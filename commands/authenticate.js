@@ -42,15 +42,7 @@ function save(err, result) {
         process.exit(1);
     }
 
-    var data = {
+    settings({
         accessToken: result.access_token
-    };
-
-    settings.set(data, function (err, result) {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log('Success!');
-        }
     });
 }

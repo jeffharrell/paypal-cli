@@ -2,11 +2,19 @@
 
 
 var Payment = require('paypal-api').payment;
+var callback = require('../util/cb');
 
 
-module.exports = function (config, options, callback) {
-    var payment = new Payment(config);
-    var action = options._.shift();
+module.exports = function (config, yargs) {
+	var argv, payment, action;
 
-    payment[action] && payment[action](options, callback);
+	yargs.demand('total');
+	yargs.demand('return_url');
+	yargs.demand('cancel_url');
+
+	argv = yargs.argv;
+	payment = new Payment(config);
+	action = argv._[1];
+
+    payment[action] && payment[action](argv, callback);
 };
