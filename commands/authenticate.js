@@ -10,7 +10,6 @@ module.exports = function (config, yargs) {
 	yargs.default('clientId', null);
 	yargs.default('secret', null);
 
-
     prompt.start();
     prompt.message = '';
     prompt.delimiter = '';
@@ -28,16 +27,19 @@ module.exports = function (config, yargs) {
             required: true,
             hidden: true
         }
-    ], function (err, options) {
-        if (err) {
-            console.error(err);
-        } else {
-            var auth = new Auth(config);
-            auth.login(options, save);
-        }
-    });
+    ], callback);
 };
 
+
+function callback(err, options) {
+    if (err) {
+        console.error(err);
+        process.exit(1);
+    } else {
+        var auth = new Auth(config);
+        auth.login(options, save);
+    }
+}
 
 
 function save(err, result) {

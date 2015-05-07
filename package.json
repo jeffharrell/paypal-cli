@@ -19,7 +19,6 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
-    "minimist": "^1.1.1",
     "paypal-api": "^1.00",
     "prompt": "^0.2.14",
     "treeify": "^1.0.1",
