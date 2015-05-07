@@ -9,6 +9,7 @@ var yargs = require('yargs')
     .usage(fs.readFileSync('./USAGE').toString())
     .help('h')
     .alias('h', 'help')
+    .showHelpOnFail(false, 'Specify --help for available options')
     .alias('v', 'version')
     .version(require('./package').version);
 
