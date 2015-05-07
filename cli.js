@@ -4,9 +4,11 @@
 
 
 var fs = require('fs');
+var path = require('path');
+
 
 var yargs = require('yargs')
-    .usage(fs.readFileSync('./USAGE').toString())
+    .usage(fs.readFileSync(path.resolve(__dirname, 'USAGE')).toString())
     .help('h')
     .alias('h', 'help')
     .showHelpOnFail(false, 'Specify --help for available options')

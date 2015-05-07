@@ -21,7 +21,6 @@ test('Successful authentication', function (t) {
     ];
 
     child_process.execFile(cli, args, function (err, stdout, stderr) {
-        console.log(stderr);
         t.ok(!stderr, 'No error returned');
         t.ok(stdout === '', 'Assume we have the token');
     });
