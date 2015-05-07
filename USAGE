@@ -1,7 +1,7 @@
 
 Usage: paypal <command> [options]
 
-Commands: 
+Commands:
 
     paypal authenticate [--clientId=<clientId> --secret=<secret>]
 

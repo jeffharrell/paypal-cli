@@ -7,7 +7,9 @@
     "paypal": "./cli.js"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "tape test/*.js",
+    "cover": "istanbul cover tape -- test/*.js",
+    "lint": "jshint -c .jshintrc **/*.js"
   },
   "keywords": [
     "paypal",
@@ -17,11 +19,23 @@
   ],
   "author": "Jeff Harrell <jeff@juxtadesign.com>",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "istanbul": "^0.3.13",
+    "jshint": "^2.7.0",
+    "tape": "^4.0.0"
+  },
   "dependencies": {
     "paypal-api": "^1.00",
     "prompt": "^0.2.14",
     "treeify": "^1.0.1",
     "yargs": "^3.8.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jeffharrell/paypal-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jeffharrell/paypal-cli/issues"
+  },
+  "homepage": "https://github.com/jeffharrell/paypal-cli"
 }
