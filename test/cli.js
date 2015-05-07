@@ -16,7 +16,7 @@ test('Display help', function (t) {
             encoding: 'utf8'
         });
 
-        t.ok(stdout.indexOf(expected) === 0);
+        t.ok(stdout.indexOf(expected) === 0, 'Help content matches usage');
     });
 });
 
@@ -27,6 +27,6 @@ test('Display version', function (t) {
     child_process.execFile(cli, ['--version'], function (err, stdout, stderr) {
         var expected = require('../package').version;
 
-        t.ok(stdout.indexOf(expected) === 0);
+        t.ok(stdout.indexOf(expected) === 0, 'Version matches package.json');
     });
 });

@@ -27,19 +27,18 @@ module.exports = function (config, yargs) {
             required: true,
             hidden: true
         }
-    ], callback);
+    ], function (err, options) {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        } else {
+            var auth = new Auth(config);
+            auth.login(options, save);
+        }
+    });
 };
 
 
-function callback(err, options) {
-    if (err) {
-        console.error(err);
-        process.exit(1);
-    } else {
-        var auth = new Auth(config);
-        auth.login(options, save);
-    }
-}
 
 
 function save(err, result) {
