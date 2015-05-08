@@ -5,7 +5,7 @@ Commands:
 
     paypal authenticate [--clientId=<clientId> --secret=<secret>]
 
-    paypal payment create  --total=1.00 --return-url=<url> --cancel-url=<url> [
+    paypal payment create --total=1.00 --return-url=<url> --cancel-url=<url> [
         --intent=<intent> --currency=<currency> --payment-method=<method>]
 
     paypal payment details --payment-id=<id>

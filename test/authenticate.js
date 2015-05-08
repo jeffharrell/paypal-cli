@@ -3,8 +3,7 @@
 
 var path = require('path');
 var test = require('tape');
-var child_process = require('child_process');
-var cli = path.resolve(__dirname, '..', 'cli.js');
+var cli = require('./util/cli');
 
 
 var clientId = process.env.PAYPAL_CLI_CLIENT;
@@ -14,21 +13,26 @@ var secret = process.env.PAYPAL_CLI_SECRET;
 test('Successful authentication', function (t) {
     t.plan(2);
 
+    if (!clientId || !secret) {
+    	t.fail('process.env.PAYPAL_CLI_CLIENT and process.env.PAYPAL_CLI_SECRET must be set! Exiting.');
+    	process.exit(1);
+    }
+
     var args = [
         'authenticate',
         '--clientId=' + clientId,
         '--secret=' + secret
     ];
 
-    child_process.execFile(cli, args, function (err, stdout, stderr) {
-        t.ok(!stderr, 'No error returned');
-        t.ok(stdout === '', 'Assume we have the token');
+    cli(args, function (err, result) {
+        t.notOk(err, 'No error');
+        t.ok(result == '', 'Exit cleanly');
     });
 });
 
 
 test('Unsuccessful authentication', function (t) {
-    t.plan(1);
+    t.plan(2);
 
     var args = [
         'authenticate',
@@ -36,7 +40,8 @@ test('Unsuccessful authentication', function (t) {
         '--secret=user'
     ];
 
-    child_process.execFile(cli, args, function (err, stdout, stderr) {
-        t.ok(~stderr.indexOf('Unauthorized'), 'User is not logged in');
+    cli(args, function (err, result) {
+    	t.ok(err, 'Error is returned');
+        t.notOk(result, 'Result is empty');
     });
 });

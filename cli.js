@@ -6,7 +6,6 @@
 var fs = require('fs');
 var path = require('path');
 
-
 var yargs = require('yargs')
     .usage(fs.readFileSync(path.resolve(__dirname, 'USAGE')).toString())
     .help('h')
@@ -18,6 +17,8 @@ var yargs = require('yargs')
 var argv = yargs.argv;
 var action = argv._[0];
 var config = require('./util/config')();
+
+
 
 var commands = {
     authenticate: require('./commands/authenticate'),
