@@ -7,9 +7,10 @@ var file = [process.env.USERPROFILE || process.env.HOME, '.paypal-cli'].join(pat
 
 
 var DEFAULTS = {
-	accessToken: null,
-	format: 'json',
-	url: 'https://api.sandbox.paypal.com'
+	client_id: '',
+	client_secret: '',
+	format: 'text',
+	mode: 'sandbox'
 };
 
 
@@ -34,9 +35,10 @@ function merge(obj1, obj2) {
 
 function read() {
 	var config;
-	var result = fs.readFileSync(file);
+	var result;
 
 	try {
+		result = fs.readFileSync(file);
 		config = JSON.parse(result.toString());
 	} catch (e) {
 		config = DEFAULTS;

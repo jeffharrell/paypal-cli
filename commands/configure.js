@@ -3,12 +3,15 @@
 
 var prompt = require('prompt');
 var config = require('../util/config');
-var Auth = require('paypal-api').authenticate;
 
 
 module.exports = function (config, yargs) {
-	yargs.default('clientId', null);
-	yargs.default('secret', null);
+	yargs.default('client_id', null);
+	yargs.default('client_secret', null);
+    yargs.default('mode', 'sandbox');
+
+    yargs.alias('client-id', 'client_id');
+    yargs.alias('secret', 'client_secret');
 
     prompt.start();
     prompt.message = '';
@@ -17,25 +20,22 @@ module.exports = function (config, yargs) {
 
     prompt.get([
         {
-            name: 'clientId',
+            name: 'client_id',
             description: 'Client Id:',
             required: true
         },
         {
-            name: 'secret',
+            name: 'client_secret',
             description: 'Secret:',
             required: true,
             hidden: true
+        },
+        {
+            name: 'mode',
+            description: 'Environment:',
+            required: true
         }
-    ], function (err, options) {
-        if (err) {
-            console.error(err);
-            process.exit(1);
-        } else {
-            var auth = new Auth(config);
-            auth.login(options, save);
-        }
-    });
+    ], save);
 };
 
 
@@ -47,7 +47,5 @@ function save(err, result) {
         process.exit(1);
     }
 
-    config({
-        accessToken: result.access_token
-    });
+    config(result);
 }

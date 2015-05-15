@@ -3,11 +3,15 @@ Usage: paypal <command> [options]
 
 Commands:
 
-    paypal authenticate [--clientId=<clientId> --secret=<secret>]
+    paypal configure [--clientId=<clientId> --secret=<secret>]
 
     paypal payment create --total=1.00 --return-url=<url> --cancel-url=<url> [
-        --intent=<intent> --currency=<currency> --payment-method=<method>]
+        --intent=<intent> --currency=<currency> --payment-method=<method>
+        --description=<description> ]
 
-    paypal payment details --payment-id=<id>
+    paypal payment get --payment-id=<id>
 
-    paypal payment execute --payment-id=<id> --payer-id=<user>
+    paypal payment execute --payment-id=<id> --payer-id=<user> [
+        --total=<total> ]
+
+    paypal payment list [ --count=<count> --start_index:<index> ]

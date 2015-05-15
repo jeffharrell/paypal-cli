@@ -6,7 +6,7 @@ var treeify = require('treeify');
 
 module.exports = function (err, result) {
     if (err) {
-        console.error(err);
+        console.error(err.response);
         process.exit(1);
     } else {
         console.log('');

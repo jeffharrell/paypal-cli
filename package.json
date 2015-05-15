@@ -7,7 +7,7 @@
     "paypal": "./cli.js"
   },
   "scripts": {
-    "test": "tape test/*.js",
+    "test": "node_modules/.bin/tape test/*.js",
     "coverage": "node_modules/.bin/istanbul cover tape -- test/*.js",
     "lint": "node_modules/.bin/jshint -c .jshintrc **/*.js"
   },
@@ -25,7 +25,7 @@
     "tape": "^4.0.0"
   },
   "dependencies": {
-    "paypal-api": "^1.00",
+    "paypal-rest-sdk": "^1.5.2",
     "prompt": "^0.2.14",
     "treeify": "^1.0.1",
     "yargs": "^3.8.0"

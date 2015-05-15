@@ -21,7 +21,7 @@ var config = require('./util/config')();
 
 
 var commands = {
-    authenticate: require('./commands/authenticate'),
+    configure: require('./commands/configure'),
     payment: require('./commands/payment')
 };
 
