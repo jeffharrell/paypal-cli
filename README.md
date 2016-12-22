@@ -1,6 +1,10 @@
+
 # PayPal CLI
 
 CLI interface to PayPal's REST APIs. Currently only supports payments. 
+
+**This is a developer preview. Please note that it is for example purposes only and is unsupported.**
+
 
 ## Usage:
 ```sh
